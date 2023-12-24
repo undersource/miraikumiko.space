@@ -1,0 +1,13 @@
+[Unit]
+Description=miraikumiko backend
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/miraikumiko.space
+ExecStart=/var/www/miraikumiko.space/venv/bin/python /var/www/miraikumiko.space/run.py -c /etc/miraikumiko.conf -l /var/log/miraikumiko.log
+
+[Install]
+WantedBy=multi-user.target
