@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "Inter";
+  src: url(/fonts/Inter-Regular.ttf);
+}
+
+body {
+  font-family: "Inter";
+}
+
+header {
+  display: flex;
+  align-items: center;
+  margin: 1rem 2rem;
+  gap: 2rem;
+  font-family: "Inter";
+}
+
+header .logo {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a {
+  color: maroon;
+  text-decoration: none;
+}
+
+.menu, .contacts {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  gap: 1rem;
+}
+
+.menu li a, .sites a, .soft a {
+  color: inherit;
+}
+
+main {
+  max-width: 700px;
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+}
+
+.tags {
+  display: inline;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tags li {
+  display: inline;
+  margin-right: 10px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
