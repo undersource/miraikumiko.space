@@ -83,6 +83,16 @@ session = Session()
 
 
 def get_article_tags_id(id: int):
-    article_tags_id = session.execute(text("SELECT * FROM article_tags WHERE article_id = {id};".format(id=id)))
+    article_tags_id = session.execute(text(f"SELECT * FROM article_tags WHERE article_id = {id};"))
 
     return [row for row in article_tags_id]
+
+
+def get_articles_of_tag(name: int):
+    tag = session.query(Tag).filter(Tag.name.in_((name,))).first()
+    raw_articles_id = session.execute(text(f"SELECT article_id FROM article_tags WHERE tag_id = {tag.id};"))
+    articles_id = [article_id[0] for article_id in raw_articles_id]
+    articles = [session.query(Article).filter(Article.id.in_((article_id,))).first() for article_id in articles_id]
+    article_slugs = [{"title": article.title, "slug": article.slug} for article in articles]
+
+    return article_slugs

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from backend.misc.database import session
-from backend.misc.database import User, Article, Tag, get_article_tags_id
+from backend.misc.database import User, Article, Tag, get_article_tags_id, get_articles_of_tag
 from backend.misc.models import PostArticleData
 from backend.misc.security import verify_password
 
@@ -28,7 +28,7 @@ async def get_article(slug):
     return article
 
 
-@app.get("/api/article/tags/{id}")
+@app.get("/api/article/{id}/tags")
 async def get_article_tags(id: int):
     tags = []
     article_tags_id = get_article_tags_id(id)
@@ -45,6 +45,13 @@ async def get_tag(name):
     tag = session.query(Tag).filter(Tag.name.in_((name,))).first()
 
     return tag
+
+
+@app.get("/api/tag/{name}/articles")
+async def get_tag_articles(name):
+    articles = get_articles_of_tag(name)
+
+    return articles
 
 
 @app.post("/api/article/post")

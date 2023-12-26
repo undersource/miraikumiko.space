@@ -17,5 +17,21 @@ args_parser.add_argument(
     dest='log',
     help='log file path'
 )
+args_parser.add_argument(
+    '-n',
+    '--name',
+    type=str,
+    default=None,
+    dest='name',
+    help='name of user'
+)
+args_parser.add_argument(
+    '-p',
+    '--password',
+    type=str,
+    default=None,
+    dest='password',
+    help='password of user'
+)
 
 args = args_parser.parse_args()
