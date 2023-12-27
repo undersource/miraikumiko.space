@@ -18,4 +18,4 @@ if __name__ == "__main__":
         print(f'User "{args.name}" has been created')
 
     else:
-        uvicorn.run("run:app", host="0.0.0.0", port=8000, reload=True)
+        uvicorn.run("run:app", uds="miraikumiko.sock", reload=True)
