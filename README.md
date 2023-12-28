@@ -22,7 +22,7 @@ Frontend config `frontend/src/config.js` need setup API url:
 export const API_URL = "https://miraikumiko.space/api"
 ```
 
-Backend config `miraikumiko.conf` have 3 database engine `sqlite`, `mariadb` and `postgresql`:
+Backend config `miraikumiko.conf` have 3 database engines `sqlite`, `mariadb` and `postgresql`:
 
 ```
 [database]
