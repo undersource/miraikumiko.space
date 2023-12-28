@@ -38,6 +38,8 @@ PASSWORD    =
 
 Working directory is in `/var/www/miraikumiko.space`
 
+Copy config to `/etc/miraikumiko.conf`
+
 ## Setup frontend
 
 ```
