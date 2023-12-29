@@ -66,7 +66,7 @@
       <br>
       <a href="https://syncplay.pl">Syncplay</a>
       <br>
-      <a href="https://teamjoin.de">Jitsi Meet</a>
+      <a href="https://framatalk.org">Jitsi Meet</a>
     </div>
     <ul class="contacts">
       <b>Где я:</b>
