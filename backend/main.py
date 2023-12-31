@@ -78,6 +78,17 @@ async def post_article(data: ArticleModel, credentials: HTTPBasicCredentials = D
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
 
     article = Article()
+
+    query = session.query(Article).filter(Article.title.in_((data.title,))).first()
+
+    if query is not None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Title already exist")
+
+    query = session.query(Article).filter(Article.slug.in_((data.slug,))).first()
+
+    if query is not None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Slug already exist")
+    
     article.title = data.title
     article.slug = data.slug
     article.text = data.text

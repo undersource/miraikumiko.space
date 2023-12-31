@@ -2,7 +2,7 @@
   <main>
     <h1>Login</h1>
     <div class="login">
-      <p v-if="error" class="error">Invalid login or password</p>
+      <p v-if="error" class="error">{{ error }}</p>
       <input type="name" placeholder="Username" autocomplete="on" id="username" v-model="username">
       <input type="password" placeholder="Password" id="password" v-model="password">
       <button @click="sendData">Submit</button>
@@ -93,7 +93,7 @@ export default {
           this.$router.push('/dashboard');
         })
         .catch(error => {
-          this.error = error
+          this.error = "Invalid login or password"
           console.error(error);
         });
     }
