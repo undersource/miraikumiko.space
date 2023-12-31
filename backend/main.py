@@ -1,10 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from base64 import b64encode
 from backend.misc.database import session
-from backend.misc.database import User, Article, Tag, get_article_tags_id, get_articles_of_tag
-from backend.misc.models import PostArticleData
+from backend.misc.database import User, Article, Tag, Donator
+from backend.misc.database import get_article_tags_id, get_articles_of_tag
+from backend.misc.models import UserModel, ArticleModel, CookieModel
 from backend.misc.security import verify_password
 
 app = FastAPI()
+security = HTTPBasic()
 
 
 @app.get("/api/articles")
@@ -21,8 +25,15 @@ async def get_tags():
     return tags
 
 
+@app.get("/api/donators")
+async def get_donators():
+    donators = session.query(Donator).all()
+
+    return donators
+
+
 @app.get("/api/article/{slug}")
-async def get_article(slug):
+async def get_article(slug: str):
     article = session.query(Article).filter(Article.slug.in_((slug,))).first()
 
     return article
@@ -41,42 +52,67 @@ async def get_article_tags(id: int):
 
 
 @app.get("/api/tag/{name}")
-async def get_tag(name):
+async def get_tag(name: str):
     tag = session.query(Tag).filter(Tag.name.in_((name,))).first()
 
     return tag
 
 
 @app.get("/api/tag/{name}/articles")
-async def get_tag_articles(name):
+async def get_tag_articles(name: str):
     articles = get_articles_of_tag(name)
 
     return articles
 
 
 @app.post("/api/article/post")
-async def post_article(request: PostArticleData):
-    data = request.data
-    username = data["login"].name
-    password = data["login"].password
-    query = session.query(User).filter(User.name.in_((username,))).first()
+async def post_article(data: ArticleModel, credentials: HTTPBasicCredentials = Depends(security)):
+    login = credentials.username
+    password = credentials.password
+    query = session.query(User).filter(User.login.in_((login,))).first()
 
     if query is not None:
         if not verify_password(password, query.password):
-            return 401
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
     else:
-        return 401
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
 
     article = Article()
-    article.title = data["article"].title
-    article.slug = data["article"].slug
-    article.text = data["article"].text
+    article.title = data.title
+    article.slug = data.slug
+    article.text = data.text
 
-    if data["article"].tags != []:
-        for name in data["article"].tags:
-            article.tags.append(Tag(name=name))
+    for name in data.tags:
+        tag = session.query(Tag).filter(Tag.name.in_((name,))).first()
+
+        if tag is None:
+            tag = Tag(name=name)
+
+        article.tags.append(tag)
             
     session.add(article)
     session.commit()
 
-    return 200
+    return status.HTTP_200_OK
+
+
+@app.get("/api/auth")
+async def login(credentials: HTTPBasicCredentials = Depends(security)):
+    login = credentials.username
+    password = credentials.password
+    query = session.query(User).filter(User.login.in_((login,))).first()
+
+    if query is not None:
+        if not verify_password(password, query.password):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
+    else:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password")
+
+    token = b64encode(f"{login}:{password}".encode('utf-8'))
+
+    return { "token": token }
+
+
+@app.get("/api/dashboard")
+async def dashboard(cookie: CookieModel):
+    return

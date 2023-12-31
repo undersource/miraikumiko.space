@@ -22,9 +22,15 @@ Frontend config `frontend/src/config.js` need setup API url:
 export const API_URL = "https://miraikumiko.space/api"
 ```
 
-Backend config `miraikumiko.conf` have 3 database engines `sqlite`, `mariadb` and `postgresql`:
+Backend config `miraikumiko.conf`. If app has `prod` mode, backend will be running as socket and database has 3 database engines `sqlite`, `mariadb` and `postgresql`:
 
 ```
+[app]
+MODE        = prod
+SOCKET      = miraikumiko.sock
+HOST        =
+PORT        =
+
 [database]
 TYPE        = sqlite
 HOST        =
@@ -76,7 +82,7 @@ ln -s /etc/nginx/sites-available/miraikumiko.conf /etc/nginx/sites-enabled/mirai
 
 Create user and password:
 
-`python run.py -n admin -p password`
+`python run.py -L admin -P password`
 
 ## OpenRC
 

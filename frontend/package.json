@@ -12,7 +12,8 @@
     "axios": "^1.6.2",
     "vue": "^3.3.10",
     "vue-fetch": "^2.0.0",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue3-cookies": "^1.0.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.1",

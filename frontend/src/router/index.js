@@ -6,6 +6,8 @@ import BusinessView from '../views/BusinessView.vue'
 import TagView from '../views/TagView.vue'
 import ArticleView from '../views/ArticleView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
+import LoginView from '../views/LoginView.vue'
+import DashboardView from '../views/DashboardView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,7 +43,18 @@ const router = createRouter({
       component: TagView
     },
     {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView
+    },
+    {
       path: "/:pathMatch(.*)",
+      name: '404',
       component: PageNotFound
     }
   ]

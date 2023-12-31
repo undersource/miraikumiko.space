@@ -1,6 +1,6 @@
 <template>
   <header>
-    <router-link to="/" class="logo">MIRAI | KUMIKO</router-link>
+    <router-link to="/" class="logo"><span style="color: maroon;">MIRAI</span> | KUMIKO</router-link>
     <nav>
       <ul class="menu">
         <li v-for="link, index in ['articles', 'tags', 'business']" :key="index" >

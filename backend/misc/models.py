@@ -1,9 +1,11 @@
 from pydantic import BaseModel
-from collections.abc import Mapping
 
 
 class UserModel(BaseModel):
-    name: str
+    name: str | None = None
+    phone: str| None = None
+    email: str | None = None
+    login: str
     password: str
 
 
@@ -14,5 +16,11 @@ class ArticleModel(BaseModel):
     tags: list[str]
 
 
-class PostArticleData(BaseModel):
-    data: Mapping[str, UserModel | ArticleModel]
+class DonatorModel(BaseModel):
+    name: str
+    url: str
+    amount: float
+
+
+class CookieModel(BaseModel):
+    field: dict

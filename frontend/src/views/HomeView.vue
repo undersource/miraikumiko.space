@@ -32,22 +32,16 @@
       находился город Спарта), чётко и по делу.
     </p>
     <hr>
-    <h3>Моё почтение</h3>
-    <h4>Предкам</h4>
-    <i>Всем, чьи труды и наследие проносятся сквозь века</i>
-    <h4>Современниками</h4>
-    <div class="sites">
-      <a href="https://abzubov.com">abzubov.com</a>
-      <br>
-      <a href="https://ambment.cat">ambment.cat</a>
-      <br>
-      <a href="https://lukesmith.xyz">lukesmith.xyz</a>
-    </div>
-    <h4>Донатерам</h4>
-    <i>Здесь можете быть Вы ^_^</i>
+    <h3>Список <a href="https://liberapay.com/underground">донатеров</a>:</h3>
+    <table class="donators">
+      <tr v-for="donator, index in donators" :key="index">
+        <td><a href="{{ donator.url }}">{{ donator.name }}</a></td>
+        <td><i>${{ donator.amount }}</i></td>
+      </tr>
+    </table>
     <hr>
     <h3>Кто я</h3>
-    <p>Mirai Kumiko - мой псевдоним, но он созвучен с моим именем.</p>
+    <p>Mirai Kumiko - псевдоним, созвучный с моим именем.</p>
     <h4>Софт которым пользуюсь:</h4>
     <div class="soft">
       <a href="https://archlinux.org">Arch Linux</a>
@@ -68,29 +62,66 @@
       <br>
       <a href="https://framatalk.org">Jitsi Meet</a>
     </div>
+  </main>
+  <footer>
+    <hr>
     <ul class="contacts">
-      <b>Где я:</b>
       <li>
-        <a href="mailto:underground@macaw.me">📬</a>
+        <a href="mailto:underground@macaw.me">Email</a>
       </li>
       <li>
-        <a href="https://mastodon.social/@miraikumiko">🐘</a>
+        <a href="xmpp:underground@macaw.me">XMPP</a>
       </li>
       <li>
-        <a href="https://pixtagram.social/miraikumiko">📷</a>
+        <a href="https://mastodon.social/@miraikumiko">Mastodon</a>
+      </li>
+      <li>
+        <a href="https://pixtagram.social/miraikumiko">Pixelfed</a>
       </li>
     </ul>
-    <p>
-      Хочу творить, но сейчас я нахожусь в чужой стране
-      без права на работу. Я не зарабатываю в сети рекламируя щит или кривляясь,
-      поэтому я вынужден
-      <a href="https://liberapay.com/underground">просить</a> добрых людей в достатке.
-    </p>
-  </main>
+  </footer>
 </template>
 
 <style scoped>
 main a {
   color: maroon;
 }
+
+.donators td, th {
+  border: 0px;
+}
 </style>
+
+<script>
+import axios from 'axios'
+import { API_URL } from '../config'
+
+export default {
+  data() {
+    return {
+      endpoint: API_URL + "/donators",
+      donators: []
+    }
+  },
+  created() {
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        this.fetchData()
+      },
+      { immediate: true }
+    )
+  },
+  methods: {
+    fetchData() {
+      axios.get(this.endpoint)
+        .then(res => {
+          this.donators = res.data;
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+  }
+}
+</script>

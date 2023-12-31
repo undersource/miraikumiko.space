@@ -33,8 +33,11 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column("id", Integer, primary_key=True, index=True)
-    name = Column("name", Text, nullable=False, unique=True, index=True) 
-    password = Column("password", Text, nullable=False) 
+    name = Column("name", Text, nullable=False, index=True)
+    phone = Column("phone", Text, nullable=True, index=True)
+    email = Column("email", Text, nullable=True, index=True)
+    login = Column("login", Text, nullable=False, unique=True, index=True)
+    password = Column("password", Text, nullable=False)
 
 
 article_tags = Table(
@@ -49,7 +52,7 @@ class Tag(Base):
     __tablename__ = "tags"
 
     id = Column("id", Integer, primary_key=True, index=True)
-    name = Column("name", Text, nullable=False, unique=True, index=True) 
+    name = Column("name", Text, nullable=False, unique=True, index=True)
 
 
 class Article(Base):
@@ -71,6 +74,15 @@ class Product(Base):
     description = Column("description", Text)
     price = Column("price", DECIMAL(precision=12, scale=12), nullable=False)
     picture_path = Column("picture_path", Text)
+
+
+class Donator(Base):
+    __tablename__ = "donators"
+
+    id = Column("id", Integer, primary_key=True, index=True)
+    name = Column("name", Text, nullable=False, unique=True, index=True)
+    url = Column("url", Text)
+    amount = Column("amount", DECIMAL(precision=12, scale=12), nullable=False)
 
 
 engine = create_engine(DATABASE_URL)

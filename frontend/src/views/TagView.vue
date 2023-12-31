@@ -1,8 +1,8 @@
 <template>
   <main>
     <div class="articles">
-      <ul v-for="article, index in articles" :key="index">
-        <li class="article">
+      <ul>
+        <li v-for="article, index in articles" :key="index" class="article">
           <router-link :to="`/article/${article.slug}`">{{ article.title }}</router-link>
         </li>
       </ul>

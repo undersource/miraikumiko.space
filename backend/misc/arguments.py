@@ -27,6 +27,30 @@ args_parser.add_argument(
 )
 args_parser.add_argument(
     '-p',
+    '--phone',
+    type=str,
+    default=None,
+    dest='phone',
+    help='phone of user'
+)
+args_parser.add_argument(
+    '-e',
+    '--email',
+    type=str,
+    default=None,
+    dest='email',
+    help='email of user'
+)
+args_parser.add_argument(
+    '-L',
+    '--login',
+    type=str,
+    default=None,
+    dest='login',
+    help='login of user'
+)
+args_parser.add_argument(
+    '-P',
     '--password',
     type=str,
     default=None,
